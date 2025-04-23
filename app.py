@@ -9,13 +9,14 @@ from functools import wraps
 from flask import send_file
 import tempfile
 import shutil
+from dotenv import load_dotenv
 
 app = Flask(__name__)
 app.secret_key = os.environ.get('SECRET_KEY', 'default-secret-key')
 
 # Get API credentials from environment variables or set them here
-API_KEY = os.environ.get('GOOGLE_API_KEY', 'AIzaSyDQZUzJ1s-Fq_lfDDIhEFgh8hXsnPLxRSM')
-CX = os.environ.get('GOOGLE_CX', '027240d691ea5422b')
+API_KEY = os.getenv('GOOGLE_API_KEY')
+CX = os.getenv('GOOGLE_CX')
 
 # Additional book sources
 OPEN_LIBRARY_API = "https://openlibrary.org/search.json"
