@@ -221,21 +221,23 @@ def download_file():
         return "No file URL provided.", 400
 
     try:
-        # Stream download
+        # Make request and decode stream properly
         r = requests.get(url, stream=True)
         r.raise_for_status()
+        r.raw.decode_content = True  # <== Important
 
-        # Write to a temp file
-        temp_file = tempfile.NamedTemporaryFile(delete=False)
-        shutil.copyfileobj(r.raw, temp_file)
-        temp_file.close()
+        # Create temp file
+        temp_file = tempfile.NamedTemporaryFile(delete=False, suffix=".pdf")
+        with open(temp_file.name, 'wb') as f:
+            shutil.copyfileobj(r.raw, f)
 
-        # Send file with download header
+        # Serve as downloadable file
         return send_file(
             temp_file.name,
             as_attachment=True,
             download_name=url.split("/")[-1]
         )
+
     except Exception as e:
         return f"Download failed: {e}", 500
 
