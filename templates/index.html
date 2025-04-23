@@ -1,0 +1,66 @@
+<!-- templates/index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BookWorm - A Book Search Engine</title>
+    <link rel="stylesheet" href="static/style.css">
+    <link rel="stylesheet" href="search.html">
+</head>
+<body>
+    <div class="container">
+        <header class="home-header">
+            <h1>BookWorm</h1>
+            <p class="tagline">Search across multiple book sources for free ebooks and PDFs</p>
+        </header>
+
+        <div class="search-container home-search">
+            <form method="POST" action="/">
+                <div class="search-box">
+                    <input type="text" name="query" placeholder="Search for books, authors, topics..." required autofocus>
+                    <button type="submit"><span class="search-icon">🔍</span> Search</button>
+                </div>
+            </form>
+        </div>
+
+        <div class="features">
+            <div class="feature-card">
+                <div class="feature-icon">📚</div>
+                <h3>Multiple Sources</h3>
+                <p>Search across Google, Open Library, and Project Gutenberg for comprehensive results</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">💾</div>
+                <h3>Free Downloads</h3>
+                <p>Access thousands of free ebooks in PDF, EPUB and other formats</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">⚡</div>
+                <h3>Fast Results</h3>
+                <p>Smart caching system ensures quick search results every time</p>
+            </div>
+        </div>
+
+        <div class="popular-searches">
+            <h3>Popular Searches</h3>
+            <div class="tag-cloud">
+                <a href="{{ url_for('search', query='Programming') }}">Programming</a>
+                <a href="{{ url_for('search', query='Classic Literature') }}">Classic Literature</a>
+                <a href="{{ url_for('search', query='Science Fiction') }}">Science Fiction</a>
+                <a href="{{ url_for('search', query='Mathematics') }}">Mathematics</a>
+                <a href="{{ url_for('search', query='Philosophy') }}">Philosophy</a>
+                <a href="{{ url_for('search', query='History') }}">History</a>
+                <a href="{{ url_for('search', query='Computer Science') }}">Computer Science</a>
+                <a href="{{ url_for('search', query='Biography') }}">Biography</a>
+            </div>
+        </div>
+
+        <footer>
+            <p>BiblioPDFind - Your gateway to free knowledge</p>
+            <p class="disclaimer">This service uses APIs from Google, Open Library, and Project Gutenberg</p>
+            <p>Made with ❤️ by <a href="https://github.com/Debkumar-Baksi">Debkumar</a></p>
+        </footer>
+    </div>
+</body>
+</html>
