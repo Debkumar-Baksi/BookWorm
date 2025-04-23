@@ -6,6 +6,9 @@ import json
 from datetime import datetime
 import hashlib
 from functools import wraps
+from flask import send_file
+import tempfile
+import shutil
 
 app = Flask(__name__)
 app.secret_key = os.environ.get('SECRET_KEY', 'default-secret-key')
@@ -210,6 +213,33 @@ def search():
         total_pages=total_pages,
         source_stats=search_results["source_stats"]
     )
+
+@app.route('/download')
+def download_file():
+    url = request.args.get('url')
+    if not url:
+        return "No file URL provided.", 400
+
+    try:
+        # Stream download
+        r = requests.get(url, stream=True)
+        r.raise_for_status()
+
+        # Write to a temp file
+        temp_file = tempfile.NamedTemporaryFile(delete=False)
+        shutil.copyfileobj(r.raw, temp_file)
+        temp_file.close()
+
+        # Send file with download header
+        return send_file(
+            temp_file.name,
+            as_attachment=True,
+            download_name=url.split("/")[-1]
+        )
+    except Exception as e:
+        return f"Download failed: {e}", 500
+
+
 
 if __name__ == '__main__':
     app.run(debug=True)
